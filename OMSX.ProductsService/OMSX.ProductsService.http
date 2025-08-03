@@ -1,0 +1,6 @@
+@OMSX.ProductsService_HostAddress = http://localhost:5183
+
+GET {{OMSX.ProductsService_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
