@@ -11,11 +11,11 @@ namespace OMSX.ProductsService.Entities
         public Guid ImageId { get; set; }
 
         [ForeignKey(nameof(CategoryNameId))]
-        [DeleteBehavior(DeleteBehavior.Cascade)]
+        [DeleteBehavior(DeleteBehavior.ClientCascade)]
         public required virtual Localization CategoryName { get; set; }
 
         [ForeignKey(nameof(ImageId))]
-        [DeleteBehavior(DeleteBehavior.Cascade)]
+        [DeleteBehavior(DeleteBehavior.ClientCascade)]
 
         public required virtual Image Image { get; set; }
     }

@@ -19,11 +19,11 @@ namespace OMSX.ProductsService.Entities
         public Category? Category { get; set; }
 
         [ForeignKey(nameof(ProductNameId))]
-        [DeleteBehavior(DeleteBehavior.Cascade)]
+        [DeleteBehavior(DeleteBehavior.ClientCascade)]
         public required virtual Localization ProductName { get; set; }
 
         [ForeignKey(nameof(DescriptionId))]
-        [DeleteBehavior(DeleteBehavior.Cascade)]
+        [DeleteBehavior(DeleteBehavior.ClientCascade)]
         public required virtual Localization Description { get; set; }
 
         public List<ProductImage> ProductImages { get; set; } = new();

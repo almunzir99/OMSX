@@ -18,11 +18,11 @@ namespace OMSX.ProductsService.Entities
         public Product? Product { get; set; }
 
         [ForeignKey(nameof(NameId))]
-        [DeleteBehavior(DeleteBehavior.Cascade)]
+        [DeleteBehavior(DeleteBehavior.ClientCascade)]
         public required virtual Localization Name { get; set; }
 
         [ForeignKey(nameof(DescriptionId))]
-        [DeleteBehavior(DeleteBehavior.Cascade)]
+        [DeleteBehavior(DeleteBehavior.ClientCascade)]
         public virtual Localization? Description { get; set; }
     }
 }
