@@ -1,0 +1,64 @@
+
+syntax = "proto3";
+package omsx.categories;
+option csharp_namespace = "OMSX.CategoriesService.Protos";
+
+service CategoriesService {
+   rpc GetCategoryById(CategoryRequest) returns (CategoryResponse);
+   rpc GetCategories(PagedRequest) returns (PagedCategoryResponse);
+   rpc CreateCategory(CategoryRequest) returns (CategoryResponse);
+   rpc UpdateCategory(CategoryRequest) returns (CategoryResponse);
+   rpc DeleteCategory(CategoryRequest) returns (CategoryResponse);
+}
+
+message CategoryRequest {
+   string id = 1;
+   LocalizationRequest categoryName = 2;
+   ImageRequest Image = 3;
+}
+
+
+message CategoryResponse {
+   string id = 1;
+   LocalizationResponse categoryName = 2;
+   ImageResponse Image = 3;
+   string createdAt = 4;
+   string updatedAt = 5;
+}
+
+
+message ImageResponse {
+ string id = 1;
+ string path = 2;
+ bool isFullPath = 3;
+}
+
+message ImageRequest {
+ string id = 1;
+ string path = 2;
+ bool isFullPath = 3;
+}
+message LocalizationResponse {
+ string id = 1;
+ string arContent = 2;
+ string enContent = 3;
+}
+message LocalizationRequest {
+ string id = 1;
+ string arContent = 2;
+ string enContent = 3;
+}
+
+message PagedRequest {
+   int32 pageSize = 1;
+   int32 pageNumber = 2;
+   string searchTerm = 3;
+   string sortBy = 4;
+   string sortDirection = 5; // "asc" or "desc"
+}
+message PagedCategoryResponse {
+   repeated CategoryResponse data = 1;
+   int32 totalCount = 2;
+   int32 pageSize = 3;
+   int32 pageNumber = 4;
+}

@@ -11,6 +11,10 @@ builder.Services.AddSwaggerGen();
 
 // Register the database context with dependency injection
 builder.Services.AddDBContext(builder.Configuration);
+// Register the unit of work
+builder.Services.RegisterUnitOfWork();
+// Register repositories
+builder.Services.RegisterRepositories();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
