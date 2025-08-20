@@ -1,12 +1,13 @@
 syntax = "proto3";
 package omsx.products;
-
+import "common.proto";
+import "categories.proto";
 
 option csharp_namespace = "OMSX.ProductsService.Protos";
 
 service ProductsService {
-   rpc GetProductById(ProductRequest) returns (ProductResponse);
-   rpc GetProducts(PagedRequest) returns (PagedProductResponse);
+   rpc GetProductById(ProductIdRequest) returns (ProductResponse);
+   rpc GetProducts(omsx.common.PagedRequest) returns (PagedProductResponse);
    rpc GetProductsByCategoryId(ProductRequest) returns (ProductResponse);
    rpc GetProductsByVendorId(ProductRequest) returns (ProductResponse);
    rpc CreateProduct(ProductRequest) returns (ProductResponse);
@@ -18,31 +19,26 @@ message ProductResponse {
    string id = 1;
    string categoryId = 2;
    string vendorId = 3;
-   LocalizationResponse productName = 4;
-   LocalizationResponse productDescription = 5;
+   omsx.common.LocalizationResponse productName = 4;
+   omsx.common.LocalizationResponse productDescription = 5;
    repeated ProductImageResponse productImages = 6;
    repeated ProductAttributeResponse productAttributes = 7;
    repeated ProductOptionResponse productOptions = 8;
-   CategoryRequest category = 9;
+   omsx.categories.CategoryResponse category = 9;
    double price = 10;
    string createdAt = 11;
    string updatedAt = 12;
 }
 
-message ProductImageResponse {
-	string id = 1;
-	ImageResponse image = 2;
-}
-
 message ProductAttributeResponse {
    string id = 1;
-   LocalizationResponse name = 2;
-   LocalizationResponse value = 3;
+   omsx.common.LocalizationResponse name = 2;
+   omsx.common.LocalizationResponse value = 3;
 }
 message ProductOptionResponse {
 	string id = 1;
-	LocalizationResponse name = 2;
-	LocalizationResponse Description = 3;
+	omsx.common.LocalizationResponse name = 2;
+	omsx.common.LocalizationResponse Description = 3;
 	double priceModifier = 4;
 }
 
@@ -50,8 +46,8 @@ message ProductRequest {
    string id = 1;
    string categoryId = 2;
    string vendorId = 3;
-   LocalizationRequest productName = 4;
-   LocalizationRequest productDescription = 5;
+   omsx.common.LocalizationRequest productName = 4;
+   omsx.common.LocalizationRequest productDescription = 5;
    repeated ProductImageRequest productImages = 6;
    repeated ProductAttributeRequest productAttributes = 7;
    repeated ProductOptionRequest productOptions = 8;
@@ -60,17 +56,22 @@ message ProductRequest {
 
 message ProductImageRequest {
 	string id = 1;
-	ImageRequest image = 2;
+	omsx.common.ImageRequest image = 2;
+}
+
+message ProductImageResponse {
+	string id = 1;
+	omsx.common.ImageRequest image = 2;
 }
 message ProductAttributeRequest {
    string id = 1;
-   LocalizationRequest name = 2;
-   LocalizationRequest value = 3;
+   omsx.common.LocalizationRequest name = 2;
+   omsx.common.LocalizationRequest value = 3;
 }
 message ProductOptionRequest {
 	string id = 1;
-	LocalizationRequest name = 2;
-	LocalizationRequest Description = 3;
+	omsx.common.LocalizationRequest name = 2;
+	omsx.common.LocalizationRequest Description = 3;
 	double priceModifier = 4;
 }
 
@@ -80,55 +81,8 @@ message PagedProductResponse {
    int32 pageSize = 3;
    int32 pageNumber = 4;
 }
-message CategoryRequest {
-   string id = 1;
-   LocalizationResponse categoryName = 2;
-   ImageResponse Image = 3;
-}
-
-
-message CategoryResponse {
-   string id = 1;
-   LocalizationResponse categoryName = 2;
-   ImageResponse Image = 3;
-   string createdAt = 4;
-   string updatedAt = 5;
-}
-
 message ProductIdRequest {
    string id = 1;
 }
 
-
-
-
-message ImageResponse {
- string id = 1;
- string path = 2;
- bool isFullPath = 3;
-}
-
-message ImageRequest {
- string id = 1;
- string path = 2;
- bool isFullPath = 3;
-}
-message LocalizationResponse {
- string id = 1;
- string arContent = 2;
- string enContent = 3;
-}
-message LocalizationRequest {
- string id = 1;
- string arContent = 2;
- string enContent = 3;
-}
-
-message PagedRequest {
-   int32 pageSize = 1;
-   int32 pageNumber = 2;
-   string searchTerm = 3;
-   string sortBy = 4;
-   string sortDirection = 5; // "asc" or "desc"
-}
 

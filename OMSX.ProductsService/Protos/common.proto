@@ -1,0 +1,33 @@
+syntax = "proto3";
+package omsx.common;
+
+option csharp_namespace = "OMSX.ProductsService.Common.Protos";
+
+message ImageResponse {
+ string id = 1;
+ string path = 2;
+ bool isFullPath = 3;
+}
+
+message ImageRequest {
+ string id = 1;
+ string path = 2;
+ bool isFullPath = 3;
+}
+message LocalizationResponse {
+ string id = 1;
+ string arContent = 2;
+ string enContent = 3;
+}
+message LocalizationRequest {
+ string id = 1;
+ string arContent = 2;
+ string enContent = 3;
+}
+message PagedRequest {
+   int32 pageSize = 1;
+   int32 pageNumber = 2;
+   string searchTerm = 3;
+   string sortBy = 4;
+   string sortDirection = 5; // "asc" or "desc"
+}
