@@ -2,6 +2,7 @@
 syntax = "proto3";
 package omsx.categories;
 import "common.proto";
+import "google/protobuf/wrappers.proto";
 
 option csharp_namespace = "OMSX.ProductsService.Protos";
 
@@ -14,7 +15,7 @@ service CategoriesService {
 }
 
 message CategoryRequest {
-   string id = 1;
+  optional  google.protobuf.StringValue id = 1;
    omsx.common.LocalizationRequest categoryName = 2;
    omsx.common.ImageRequest Image = 3;
 }

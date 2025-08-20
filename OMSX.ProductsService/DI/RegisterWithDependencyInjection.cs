@@ -1,10 +1,12 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Mapster;
+using MapsterMapper;
+using Microsoft.EntityFrameworkCore;
+using OMSX.ProductsService.Configurations;
 using OMSX.ProductsService.Database;
 using OMSX.ProductsService.Implementation;
 using OMSX.ProductsService.Interfaces;
 using OMSX.Shared.Entities.Common;
-using System;
+using System.Reflection;
 
 namespace OMSX.ProductsService.DI
 {
@@ -20,10 +22,10 @@ namespace OMSX.ProductsService.DI
         {
             services.AddScoped<IUnitOfWork, UnitOfWork>();
         }
-        public static void RegisterAutomapper(this IServiceCollection services)
+        public static void RegisterMapster(this IServiceCollection services)
         {
-            services.AddAutoMapper(typeof(Program).Assembly);
-
+            services.AddMapster();
+            TypeAdapterConfig.GlobalSettings.Scan(Assembly.GetExecutingAssembly());
         }
         public static void RegisterRepositories(this IServiceCollection services)
         {

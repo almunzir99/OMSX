@@ -1,6 +1,7 @@
-﻿using AutoMapper;
-using Grpc.Core;
+﻿using Grpc.Core;
+using MapsterMapper;
 using Microsoft.EntityFrameworkCore;
+using OMSX.ProductsService.Common.Protos;
 using OMSX.ProductsService.Interfaces;
 using OMSX.ProductsService.Protos;
 using OMSX.Shared.Extensions;

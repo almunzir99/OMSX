@@ -1,4 +1,5 @@
 using OMSX.ProductsService.DI;
+using OMSX.ProductsService.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,6 +16,11 @@ builder.Services.AddDBContext(builder.Configuration);
 builder.Services.RegisterUnitOfWork();
 // Register repositories
 builder.Services.RegisterRepositories();
+builder.Services.RegisterMapster();
+builder.Services.AddGrpc();
+builder.Services.AddGrpcReflection();
+
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -29,5 +35,10 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.MapGrpcReflectionService();
+app.MapGrpcService<ProductsGrpcService>().EnableGrpcWeb();
+app.MapGrpcService<CategoriesGrpcService>().EnableGrpcWeb();
+
 
 app.Run();

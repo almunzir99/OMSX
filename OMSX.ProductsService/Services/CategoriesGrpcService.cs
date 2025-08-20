@@ -1,10 +1,11 @@
-﻿using AutoMapper;
-using Grpc.Core;
+﻿using Grpc.Core;
+using MapsterMapper;
 using Microsoft.EntityFrameworkCore;
-using OMSX.CategoriesService.Protos;
+using OMSX.ProductsService.Common.Protos;
 using OMSX.ProductsService.Interfaces;
+using OMSX.ProductsService.Protos;
 using OMSX.Shared.Extensions;
-using static OMSX.CategoriesService.Protos.CategoriesService;
+using static OMSX.ProductsService.Protos.CategoriesService;
 
 namespace OMSX.ProductsService.Services
 {
@@ -17,7 +18,7 @@ namespace OMSX.ProductsService.Services
             this.unitOfWork = unitOfWork;
             this.mapper = mapper;
         }
-        public override async Task<CategoryResponse> GetCategoryById(CategoryRequest request, ServerCallContext context)
+        public override async Task<CategoryResponse> GetCategoryById(CategoryIdRequest request, ServerCallContext context)
         {
             var guid = request.Id.ToGuid();
             var category = await unitOfWork.CategoriesRepository.FirstAsync(x => x.Id == guid);

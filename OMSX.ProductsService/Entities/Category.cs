@@ -7,8 +7,8 @@ namespace OMSX.ProductsService.Entities
     public class Category : AuditEntityBase
     {
         public Guid ParentId { get; set; }
-        public Guid CategoryNameId { get; set; }
-        public Guid ImageId { get; set; }
+        public Guid CategoryNameId { get; set; } = Guid.NewGuid();
+        public Guid ImageId { get; set; } = Guid.NewGuid();
 
         [ForeignKey(nameof(CategoryNameId))]
         [DeleteBehavior(DeleteBehavior.ClientCascade)]
