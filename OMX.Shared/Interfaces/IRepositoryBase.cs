@@ -6,8 +6,8 @@ namespace OMSX.Shared.Interfaces
     {
         Task<List<TEntity>> ListAsync(List<Expression<Func<TEntity, bool>>>? predicates = null);
         IQueryable<TEntity> Query();
-        Task<TEntity> FirstAsync(Guid id);
-        Task<TEntity?> FirstAsync(Expression<Func<TEntity, bool>> predicate);
+        Task<TEntity> GetById(Guid id);
+        Task<TEntity?> FindAsync(Expression<Func<TEntity, bool>> predicate);
         Task<TEntity> CreateAsync(TEntity newItem);
         Task CreateBulkAsync(List<TEntity> data);
         Task<TEntity> UpdateAsync(TEntity newItem);

@@ -65,7 +65,7 @@ namespace OMSX.ProductsService.Services
         public override async Task<ProductResponse> DeleteProduct(ProductIdRequest request, ServerCallContext context)
         {
             var guid = request.Id.ToGuid();
-            var product = await unitOfWork.ProductsRepository.FirstAsync(x => x.Id == guid);
+            var product = await unitOfWork.ProductsRepository.FindAsync(x => x.Id == guid);
             await unitOfWork.ProductsRepository.DeleteAsync(guid);
             await unitOfWork.Complete();
             return mapper.Map<ProductResponse>(product);

@@ -57,7 +57,7 @@ namespace OMSX.ProductsService.Implementation
             }
         }
 
-        public async Task<TEntity> FirstAsync(Guid id)
+        public async Task<TEntity> GetById(Guid id)
         {
             if (id == Guid.Empty)
             {
@@ -66,7 +66,7 @@ namespace OMSX.ProductsService.Implementation
             return await _dbContext.Set<TEntity>().FirstAsync(x => x.Id == id);
         }
 
-        public async Task<TEntity?> FirstAsync(Expression<Func<TEntity, bool>> predicate)
+        public async Task<TEntity?> FindAsync(Expression<Func<TEntity, bool>> predicate)
         {
             if (predicate == null)
             {

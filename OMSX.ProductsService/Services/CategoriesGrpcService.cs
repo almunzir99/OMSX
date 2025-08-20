@@ -21,7 +21,7 @@ namespace OMSX.ProductsService.Services
         public override async Task<CategoryResponse> GetCategoryById(CategoryIdRequest request, ServerCallContext context)
         {
             var guid = request.Id.ToGuid();
-            var category = await unitOfWork.CategoriesRepository.FirstAsync(x => x.Id == guid);
+            var category = await unitOfWork.CategoriesRepository.FindAsync(x => x.Id == guid);
             if (category == null)
             {
                 throw new RpcException(new Status(StatusCode.NotFound, "Category not found"));
@@ -63,7 +63,7 @@ namespace OMSX.ProductsService.Services
         public override async Task<CategoryResponse> UpdateCategory(CategoryRequest request, ServerCallContext context)
         {
             var guid = request.Id.ToGuid();
-            var category = await unitOfWork.CategoriesRepository.FirstAsync(x => x.Id == guid);
+            var category = await unitOfWork.CategoriesRepository.FindAsync(x => x.Id == guid);
             if (category == null)
             {
                 throw new RpcException(new Status(StatusCode.NotFound, "Category not found"));
