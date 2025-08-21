@@ -1,5 +1,4 @@
-﻿
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using OMSX.Shared.Entities.Common;
 using OMSX.Shared.Interfaces;
 using System.Linq.Expressions;
@@ -16,6 +15,7 @@ namespace OMSX.ProductsService.Implementation
             _dbContext = dbContext;
         }
 
+        // **CRUD Methods:**
         public async Task<TEntity> CreateAsync(TEntity newItem)
         {
             if (newItem == null)
@@ -35,9 +35,18 @@ namespace OMSX.ProductsService.Implementation
             await _dbContext.Set<TEntity>().AddRangeAsync(data);
         }
 
-        public void Delete<T>(T target) where T : EntityBase
+        public async Task<TEntity> UpdateAsync(TEntity newItem)
         {
-            _dbContext.Remove<T>(target);
+            _dbContext.Update(newItem);
+            var existingItem = await _dbContext.Set<TEntity>().FirstOrDefaultAsync(x => x.Id == newItem.Id);
+            if (existingItem == null)
+            {
+                throw new KeyNotFoundException($"Entity with ID {newItem.Id} not found.");
+            }
+            existingItem.UpdatedAt = DateTime.UtcNow;
+            existingItem.UpdatedBy = newItem.UpdatedBy;
+            _dbContext.Entry(existingItem).CurrentValues.SetValues(newItem);
+            return existingItem;
         }
 
         public async Task DeleteAsync(Guid id, bool softDelete = true)
@@ -57,39 +66,52 @@ namespace OMSX.ProductsService.Implementation
             }
         }
 
-        public async Task<TEntity> GetById(Guid id)
+        public void Delete<T>(T target) where T : EntityBase
+        {
+            _dbContext.Remove<T>(target);
+        }
+
+        // **Read Methods:**
+        public async Task<TEntity> GetById(Guid id, params Expression<Func<TEntity, object>>[] includes)
         {
             if (id == Guid.Empty)
             {
                 throw new ArgumentException("ID cannot be empty", nameof(id));
             }
-            return await _dbContext.Set<TEntity>().FirstAsync(x => x.Id == id);
+            var query = _dbContext.Set<TEntity>().AsQueryable();
+            foreach (var include in includes)
+            {
+                query = query.Include(include);
+            }
+            return await query.FirstAsync(x => x.Id == id);
         }
 
-        public async Task<TEntity?> FindAsync(Expression<Func<TEntity, bool>> predicate)
+        public async Task<TEntity?> FindAsync(Expression<Func<TEntity, bool>> predicate, params Expression<Func<TEntity, object>>[] includes)
         {
             if (predicate == null)
             {
                 throw new ArgumentNullException(nameof(predicate), "Predicate cannot be null");
             }
-            return await _dbContext.Set<TEntity>().FirstOrDefaultAsync(predicate);
-        }
-
-        public async Task<TEntity?> FirstOrDefaultAsync()
-        {
-            return await _dbContext.Set<TEntity>().FirstOrDefaultAsync();
-        }
-
-        public async Task<int> GetTotalRecords(Expression<Func<TEntity, bool>>? predicate = null)
-        {
-            if (predicate == null)
+            var query = _dbContext.Set<TEntity>().AsQueryable();
+            foreach (var include in includes)
             {
-                return await _dbContext.Set<TEntity>().CountAsync();
+                query = query.Include(include);
             }
-            return await _dbContext.Set<TEntity>().CountAsync(predicate);
+            return await query.FirstOrDefaultAsync(predicate);
         }
 
-        public Task<List<TEntity>> ListAsync(List<Expression<Func<TEntity, bool>>>? predicates = null)
+        public async Task<TEntity?> FirstOrDefaultAsync(params Expression<Func<TEntity, object>>[] includes)
+        {
+            var query = _dbContext.Set<TEntity>().AsQueryable();
+            foreach (var include in includes)
+            {
+                query = query.Include(include);
+            }
+            return await query.FirstOrDefaultAsync();
+        }
+
+        // **Query Methods:**
+        public Task<List<TEntity>> ListAsync(List<Expression<Func<TEntity, bool>>>? predicates = null, params Expression<Func<TEntity, object>>[] includes)
         {
             if (predicates == null || !predicates.Any())
             {
@@ -100,6 +122,10 @@ namespace OMSX.ProductsService.Implementation
             {
                 query = query.Where(predicate);
             }
+            foreach (var include in includes)
+            {
+                query = query.Include(include);
+            }
             return query.ToListAsync();
         }
 
@@ -108,23 +134,19 @@ namespace OMSX.ProductsService.Implementation
             return _dbContext.Set<TEntity>().AsQueryable();
         }
 
-        public async Task<TEntity> UpdateAsync(TEntity newItem)
+        // **Utility Methods:**
+        public async Task<int> GetTotalRecords(Expression<Func<TEntity, bool>>? predicate = null)
         {
-            _dbContext.Update(newItem);
-            var existingItem = await _dbContext.Set<TEntity>().FirstOrDefaultAsync(x => x.Id == newItem.Id);
-            if (existingItem == null)
+            if (predicate == null)
             {
-                throw new KeyNotFoundException($"Entity with ID {newItem.Id} not found.");
+                return await _dbContext.Set<TEntity>().CountAsync();
             }
-            existingItem.UpdatedAt = DateTime.UtcNow;
-            existingItem.UpdatedBy = newItem.UpdatedBy;
-            _dbContext.Entry(existingItem).CurrentValues.SetValues(newItem);
-            return existingItem;
+            return await _dbContext.Set<TEntity>().CountAsync(predicate);
         }
+
         public Task<int> Complete(CancellationToken cancellationToken = default)
         {
             return _dbContext.SaveChangesAsync(cancellationToken);
         }
-
     }
 }
