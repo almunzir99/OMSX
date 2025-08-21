@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OMSX.ProductsService", "OMS
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OMSX.Shared", "OMX.Shared\OMSX.Shared.csproj", "{9218370F-F4B4-4DDA-A975-52246A98B211}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OMSX.VendorsService", "OMSX.VendorsService\OMSX.VendorsService.csproj", "{23A4B28A-CDA9-4B35-83E2-0CE7A4C4A381}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{9218370F-F4B4-4DDA-A975-52246A98B211}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9218370F-F4B4-4DDA-A975-52246A98B211}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9218370F-F4B4-4DDA-A975-52246A98B211}.Release|Any CPU.Build.0 = Release|Any CPU
+		{23A4B28A-CDA9-4B35-83E2-0CE7A4C4A381}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{23A4B28A-CDA9-4B35-83E2-0CE7A4C4A381}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{23A4B28A-CDA9-4B35-83E2-0CE7A4C4A381}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{23A4B28A-CDA9-4B35-83E2-0CE7A4C4A381}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
