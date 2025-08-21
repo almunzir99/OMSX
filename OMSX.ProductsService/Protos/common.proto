@@ -16,12 +16,12 @@ message ImageRequest {
  bool isFullPath = 3;
 }
 message LocalizationResponse {
-optional  google.protobuf.StringValue id = 1;
+optional google.protobuf.StringValue id = 1;
  string arContent = 2;
  string enContent = 3;
 }
 message LocalizationRequest {
-optional  google.protobuf.StringValue id = 1;
+optional google.protobuf.StringValue id = 1;
  string arContent = 2;
  string enContent = 3;
 }
@@ -31,4 +31,7 @@ message PagedRequest {
    string searchTerm = 3;
    string sortBy = 4;
    string sortDirection = 5; // "asc" or "desc"
+}
+message EmptyResponse {
+
 }

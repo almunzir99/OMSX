@@ -11,11 +11,11 @@ service CategoriesService {
    rpc GetCategories(omsx.common.PagedRequest) returns (PagedCategoryResponse);
    rpc CreateCategory(CategoryRequest) returns (CategoryResponse);
    rpc UpdateCategory(CategoryRequest) returns (CategoryResponse);
-   rpc DeleteCategory(CategoryIdRequest) returns (CategoryResponse);
+   rpc DeleteCategory(CategoryIdRequest) returns (omsx.common.EmptyResponse);
 }
 
 message CategoryRequest {
-  optional  google.protobuf.StringValue id = 1;
+  optional google.protobuf.StringValue id = 1;
    omsx.common.LocalizationRequest categoryName = 2;
    omsx.common.ImageRequest Image = 3;
 }

@@ -21,7 +21,7 @@ namespace OMSX.ProductsService.Services
         public override async Task<CategoryResponse> GetCategoryById(CategoryIdRequest request, ServerCallContext context)
         {
             var guid = request.Id.ToGuid();
-            var category = await unitOfWork.CategoriesRepository.FindAsync(x => x.Id == guid);
+            var category = await unitOfWork.CategoriesRepository.FindAsync(x => x.Id == guid, x => x.CategoryName, x => x.Image);
             if (category == null)
             {
                 throw new RpcException(new Status(StatusCode.NotFound, "Category not found"));
@@ -72,6 +72,18 @@ namespace OMSX.ProductsService.Services
             await unitOfWork.CategoriesRepository.UpdateAsync(category);
             await unitOfWork.Complete();
             return mapper.Map<CategoryResponse>(category);
+        }
+        public override async Task<EmptyResponse> DeleteCategory(CategoryIdRequest request, ServerCallContext context)
+        {
+            var guid = request.Id.ToGuid();
+            var category = await unitOfWork.CategoriesRepository.FindAsync(x => x.Id == guid);
+            if (category == null)
+            {
+                throw new RpcException(new Status(StatusCode.NotFound, "Category not found"));
+            }
+            await unitOfWork.CategoriesRepository.DeleteAsync(guid);
+            await unitOfWork.Complete();
+            return new EmptyResponse();
         }
     }
 }
