@@ -1,0 +1,98 @@
+
+syntax = "proto3";
+package omsx.vendors;
+import "common.proto";
+import "vendor-categories.proto";
+
+import "google/protobuf/wrappers.proto";
+import "google/protobuf/timestamp.proto";
+
+service VendorsService  {
+ rpc GetVendorById(omsx.common.IdRequest) returns (VendorResponse);
+   rpc GetVendors(omsx.common.PagedRequest) returns (PagedVendorsResponse);
+   rpc GetVendorsByCategoryId(VendorRequest) returns (VendorResponse);
+   rpc GetVendorsByVendorId(VendorRequest) returns (VendorResponse);
+   rpc CreateVendor(VendorRequest) returns (VendorResponse);
+   rpc UpdateVendor(VendorRequest) returns (VendorResponse);
+   rpc DeleteVendor(omsx.common.IdRequest) returns (VendorResponse);
+
+}
+
+
+message BusinessAddressResponse {
+    string street = 1;
+    string street2 = 2;
+    string city = 3;
+    string state = 4;
+    string zip_code = 5;
+    string country = 6;
+    string country_code = 7;
+    double latitude = 8;
+    double longitude = 9;
+    bool is_primary = 10;
+}
+message BusinessAddressRequest {
+    string street = 1;
+    string street2 = 2;
+    string city = 3;
+    string state = 4;
+    string zip_code = 5;
+    string country = 6;
+    string country_code = 7;
+    double latitude = 8;
+    double longitude = 9;
+    bool is_primary = 10;
+}
+message VendorRequest {
+    string business_name_id = 1;
+    string description_id = 2;
+    string legal_name = 3;
+    string website = 4;
+    string tax_id = 5;
+    string business_license = 6;
+    string vat_number = 7;
+    omsx.common.BusinessType business_type = 8;
+    string business_email = 9;
+    string business_phone = 10;
+    string support_email = 11;
+    string support_phone = 12;
+    string business_address_id = 13;
+    string logo_id = 14;
+    string vendor_category_id = 15;
+
+    omsx.common.LocalizationRequest business_name = 16;
+    omsx.common.LocalizationRequest description = 17;
+    omsx.vendorCategories.VendorCategoryRequest vendor_category = 18;
+    BusinessAddressRequest business_address = 19;
+    omsx.common.FileInfoRequest logo = 20;
+}
+
+
+message VendorResponse {
+    string business_name_id = 1;
+    string description_id = 2;
+    string legal_name = 3;
+    string website = 4;
+    string tax_id = 5;
+    string business_license = 6;
+    string vat_number = 7;
+    omsx.common.BusinessType business_type = 8;
+    string business_email = 9;
+    string business_phone = 10;
+    string support_email = 11;
+    string support_phone = 12;
+    string business_address_id = 13;
+    string logo_id = 14;
+    string vendor_category_id = 15;
+    omsx.common.LocalizationResponse business_name = 16;
+    omsx.common.LocalizationResponse description = 17;
+    omsx.vendorCategories.VendorCategoryResponse vendor_category = 18;
+    BusinessAddressResponse business_address = 19;
+    omsx.common.FileInfoResponse logo = 20;
+}
+message PagedVendorsResponse {
+   repeated VendorResponse data = 1;
+   int32 totalCount = 2;
+   int32 pageSize = 3;
+   int32 pageNumber = 4;
+}

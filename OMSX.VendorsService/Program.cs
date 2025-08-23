@@ -1,4 +1,5 @@
 using OMSX.VendorsService.DI;
+using OMSX.VendorsService.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -36,5 +37,7 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
-
+app.MapGrpcReflectionService();
+app.MapGrpcService<VendorCategoriesGrpcService>().EnableGrpcWeb();
+app.MapGrpcService<VendorsGrpcService>().EnableGrpcWeb();
 app.Run();

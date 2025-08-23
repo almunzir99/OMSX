@@ -8,6 +8,7 @@ namespace OMSX.VendorsService.Entities
     {
         public Guid CategoryNameId { get; set; }
         public Guid DescriptionId { get; set; }
+        public Guid? ImageId { get; set; }
 
         [ForeignKey(nameof(CategoryNameId))]
         [DeleteBehavior(DeleteBehavior.ClientCascade)]
@@ -18,5 +19,9 @@ namespace OMSX.VendorsService.Entities
         public Localization? Description { get; set; }
         public Guid? ParentCategoryId { get; set; }
         public VendorCategory? ParentCategory { get; set; }
+
+        [ForeignKey(nameof(ImageId))]
+        [DeleteBehavior(DeleteBehavior.ClientCascade)]
+        public FileInfo? Image { get; set; }
     }
 }

@@ -1,0 +1,41 @@
+
+syntax = "proto3";
+package omsx.vendorCategories;
+import "common.proto";
+import "google/protobuf/wrappers.proto";
+
+option csharp_namespace = "OMSX.VendorsService.Protos";
+
+service VendorCategoriesService {
+   rpc GetCategoryById(omsx.common.IdRequest) returns (VendorCategoryResponse);
+   rpc GetCategories(omsx.common.PagedRequest) returns (PagedVendorCategoryResponse);
+   rpc CreateCategory(VendorCategoryRequest) returns (VendorCategoryResponse);
+   rpc UpdateCategory(VendorCategoryRequest) returns (VendorCategoryResponse);
+   rpc DeleteCategory(omsx.common.IdRequest) returns (omsx.common.EmptyResponse);
+}
+
+message VendorCategoryRequest {
+  optional google.protobuf.StringValue id = 1;
+   omsx.common.LocalizationRequest categoryName = 2;
+   omsx.common.LocalizationRequest description = 3;
+
+   omsx.common.FileInfoRequest Image =43;
+}
+
+
+message VendorCategoryResponse {
+   string id = 1;
+   omsx.common.LocalizationResponse categoryName = 2;
+   omsx.common.FileInfoResponse Image = 3;
+    omsx.common.LocalizationResponse description = 4;
+   string createdAt = 5;
+   string updatedAt = 6;
+}
+
+
+message PagedVendorCategoryResponse {
+   repeated VendorCategoryResponse data = 1;
+   int32 totalCount = 2;
+   int32 pageSize = 3;
+   int32 pageNumber = 4;
+}

@@ -1,0 +1,51 @@
+syntax = "proto3";
+package omsx.common;
+import "google/protobuf/wrappers.proto";
+
+option csharp_namespace = "OMSX.VendorsService.Common.Protos";
+
+
+enum BusinessType {
+    INDIVIDUAL = 0;
+    SOLE_PROPRIETORSHIP = 1;
+    PARTNERSHIP = 2;
+    CORPORATION = 3;
+    LLC = 4;
+    NON_PROFIT = 5;
+    GOVERNMENT = 6;
+}
+
+message FileInfoResponse {
+string id = 1;
+ string path = 2;
+ bool isFullPath = 3;
+}
+
+message FileInfoRequest {
+ google.protobuf.StringValue id = 1;
+ string path = 2;
+ bool isFullPath = 3;
+}
+message LocalizationResponse {
+optional google.protobuf.StringValue id = 1;
+ string arContent = 2;
+ string enContent = 3;
+}
+message LocalizationRequest {
+optional google.protobuf.StringValue id = 1;
+ string arContent = 2;
+ string enContent = 3;
+}
+message PagedRequest {
+   int32 pageSize = 1;
+   int32 pageNumber = 2;
+   string searchTerm = 3;
+   string sortBy = 4;
+   string sortDirection = 5; // "asc" or "desc"
+}
+message EmptyResponse {
+
+}
+message IdRequest {
+	string id = 1;
+}
