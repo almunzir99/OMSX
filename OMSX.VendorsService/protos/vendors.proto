@@ -14,7 +14,7 @@ service VendorsService  {
    rpc GetVendorsByVendorId(VendorRequest) returns (VendorResponse);
    rpc CreateVendor(VendorRequest) returns (VendorResponse);
    rpc UpdateVendor(VendorRequest) returns (VendorResponse);
-   rpc DeleteVendor(omsx.common.IdRequest) returns (VendorResponse);
+   rpc DeleteVendor(omsx.common.IdRequest) returns (omsx.common.EmptyResponse);
 
 }
 
@@ -44,27 +44,27 @@ message BusinessAddressRequest {
     bool is_primary = 10;
 }
 message VendorRequest {
-    string business_name_id = 1;
-    string description_id = 2;
-    string legal_name = 3;
-    string website = 4;
-    string tax_id = 5;
-    string business_license = 6;
-    string vat_number = 7;
-    omsx.common.BusinessType business_type = 8;
-    string business_email = 9;
-    string business_phone = 10;
-    string support_email = 11;
-    string support_phone = 12;
-    string business_address_id = 13;
-    string logo_id = 14;
-    string vendor_category_id = 15;
+    optional google.protobuf.StringValue id = 1;
+    optional google.protobuf.StringValue business_name_id = 2;
+    optional google.protobuf.StringValue description_id = 3;
+    string legal_name = 4;
+    string website = 5;
+    string tax_id = 6;
+    string business_license = 7;
+    string vat_number = 8;
+    omsx.common.BusinessType business_type = 9;
+    string business_email = 10;
+    string business_phone = 11;
+    string support_email = 12;
+    string support_phone = 13;
+    optional google.protobuf.StringValue business_address_id = 14;
+    optional google.protobuf.StringValue logo_id = 15;
+    string vendor_category_id = 16;
 
-    omsx.common.LocalizationRequest business_name = 16;
-    omsx.common.LocalizationRequest description = 17;
-    omsx.vendorCategories.VendorCategoryRequest vendor_category = 18;
-    BusinessAddressRequest business_address = 19;
-    omsx.common.FileInfoRequest logo = 20;
+    omsx.common.LocalizationRequest business_name = 17;
+    omsx.common.LocalizationRequest description = 18;
+    BusinessAddressRequest business_address = 20;
+    omsx.common.FileInfoRequest logo = 21;
 }
 
 

@@ -8,8 +8,8 @@ namespace OMSX.VendorsService.Entities
     public class Vendor : AuditEntityBase
     {
 
-        public Guid BusinessNameId { get; set; }
-        public Guid DescriptionId { get; set; }
+        public Guid BusinessNameId { get; set; } = Guid.NewGuid();
+        public Guid DescriptionId { get; set; } = Guid.NewGuid();
         public required string LegalName { get; set; }
         public required string Website { get; set; }
         public string? TaxId { get; set; }
@@ -20,9 +20,9 @@ namespace OMSX.VendorsService.Entities
         public string? BusinessPhone { get; set; }
         public string? SupportEmail { get; set; }
         public string? SupportPhone { get; set; }
-        public Guid BusinessAddressId { get; set; }
-        public Guid LogoId { get; set; }
-        public Guid VendorCategoryId { get; set; }
+        public Guid BusinessAddressId { get; set; } = Guid.NewGuid();
+        public Guid LogoId { get; set; } = Guid.NewGuid();
+        public Guid VendorCategoryId { get; set; } 
 
         [ForeignKey(nameof(BusinessNameId))]
         [DeleteBehavior(DeleteBehavior.ClientCascade)]
